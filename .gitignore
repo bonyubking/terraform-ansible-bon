@@ -1,0 +1,23 @@
+# Terraform directories
+**/.terraform/
+**/.terraform/*
+
+# Lock file (solo dev는 무시해도 ok)
+.terraform.lock.hcl
+
+# State files (절대 커밋 금지!!)
+*.tfstate
+*.tfstate.*
+
+# Variables containing secrets
+*.tfvars
+
+# SSH Keys
+*.pem
+*.pub
+*.key
+
+# Crash logs
+crash.log
+
+.DS_Store
