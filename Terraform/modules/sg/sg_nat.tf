@@ -1,5 +1,5 @@
 resource "aws_security_group" "myce_sg_nat" {
-    name = "terra_nat_sg"
+    name = "${var.sc_name_prefix}-sg-nat"
     vpc_id = var.vpc_id       
 }
 

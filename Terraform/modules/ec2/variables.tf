@@ -1,10 +1,18 @@
-variable "subnet_id" {
+variable "instances" {
+  type = map(object({
+    subnet = string
+    sg     = string
+    public = bool
+  }))
+}
+
+variable "key_name" {
   type = string
 }
 
 variable "ami" {
   type    = string
-  default = "ami-04fcc2023d6e37430"   # 원하는 기본 AMI
+  default = "ami-04fcc2023d6e37430"
 }
 
 variable "instance_type" {
@@ -12,19 +20,6 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
-variable "security_group_ids" {
-  type    = list(string)
-}
-
-variable "key_name" {
-    type = string
-}
-
-variable "use_public_ip" {
-  type    = bool
-  default = true
-}
-
-variable "name" {
+variable "prefix" {
   type = string
 }

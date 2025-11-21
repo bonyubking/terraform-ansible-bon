@@ -1,11 +1,15 @@
-resource "aws_instance" "this" {
-  ami = var.ami
-  subnet_id = var.subnet_id
-  instance_type = var.instance_type
-  key_name = var.key_name
-  vpc_security_group_ids = var.security_group_ids
-  associate_public_ip_address = var.use_public_ip
+resource "aws_instance" "servers" {
+  for_each = var.instances
+
+  ami                         = var.ami
+  instance_type               = var.instance_type
+
+  subnet_id                   = each.value.subnet
+  key_name                    = var.key_name
+  vpc_security_group_ids      = [each.value.sg]
+  associate_public_ip_address = each.value.public
+
   tags = {
-    Name = var.name
+    Name = "${var.prefix}-${each.key}"
   }
 }

@@ -1,5 +1,5 @@
 resource "aws_security_group" "myce_sg_bastion" {
-    name = "terra_bastion_sg"
+    name = "${var.sc_name_prefix}-sg-bastion"
     vpc_id = var.vpc_id       
 }
 
