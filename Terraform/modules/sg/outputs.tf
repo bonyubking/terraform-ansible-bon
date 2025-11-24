@@ -13,3 +13,7 @@ output "nat_sg_id" {
 output "bastion_sg_id" {
     value = aws_security_group.myce_sg_bastion.id
 }
+
+output "mysql_sg_id" {
+    value = aws_security_group.myce_sg_mysql.id
+}

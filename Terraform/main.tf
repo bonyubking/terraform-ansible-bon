@@ -1,6 +1,6 @@
 locals {
   keypair = aws_key_pair.myce_keypair.key_name
-  project_name = "terra_bon"
+  project_name = "terra-bon"
 }
 
 module "vpc" {
@@ -54,3 +54,13 @@ module "ec2_instances" {
 }
 
 
+module "rds_mysql" {
+
+  source = "./modules/rds"
+  prefix = local.project_name
+  security_groups = [module.sg_groups.mysql_sg_id]
+  sb = module.vpc.private_subnets
+  db_pw = var.db_pw
+  db_name = var.db_name
+  username = var.username
+}
