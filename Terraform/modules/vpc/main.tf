@@ -46,6 +46,7 @@ resource "aws_route_table" "bon-terra-public" {
 resource "aws_route_table" "bon-terra-private" {
   vpc_id = aws_vpc.vpc.id
 
+
   tags = {
     Name = "${var.name_prefix}-private-rt"
   }

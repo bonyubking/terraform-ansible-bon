@@ -13,3 +13,7 @@ output "private_subnets" {
 output "vpc_id" {
   value = aws_vpc.vpc.id
 }
+
+output "route_table_id" {
+  value = aws_route_table.bon-terra-private.id
+}

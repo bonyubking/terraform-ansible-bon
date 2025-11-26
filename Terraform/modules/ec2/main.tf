@@ -9,7 +9,15 @@ resource "aws_instance" "servers" {
   vpc_security_group_ids      = [each.value.sg]
   associate_public_ip_address = each.value.public
 
+  source_dest_check = each.key == "nat" ? false : true
+
   tags = {
     Name = "${var.prefix}-${each.key}"
   }
+}
+
+resource "aws_route" "private_route_to_nat" {
+    route_table_id = var.private_rt_id
+    destination_cidr_block = "0.0.0.0/0"
+    network_interface_id = aws_instance.servers["nat"].primary_network_interface_id
 }

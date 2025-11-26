@@ -27,7 +27,8 @@ module "sg_groups" {
 module "ec2_instances" {
   source = "./modules/ec2"
   key_name = local.keypair
-  prefix   = local.project_name 
+  prefix   = local.project_name
+  private_rt_id = module.vpc.route_table_id 
 
   instances = {
     private = {

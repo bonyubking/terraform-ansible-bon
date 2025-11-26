@@ -6,10 +6,10 @@ resource "aws_security_group" "myce_sg_nat" {
 
 resource "aws_security_group_rule" "nat_security_1" {
     type = "ingress"
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["10.0.0.0/16"]
     security_group_id = aws_security_group.myce_sg_nat.id
 }
 

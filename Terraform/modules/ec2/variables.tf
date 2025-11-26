@@ -23,3 +23,7 @@ variable "instance_type" {
 variable "prefix" {
   type = string
 }
+
+variable "private_rt_id" {
+  type = string
+}
