@@ -1,0 +1,35 @@
+---
+- hosts: private
+  become: yes
+  tasks:
+
+    - name: Install required packages
+      package:
+        name:
+          - git
+          - ca-certificates
+        state: present
+
+    - name: Install Docker
+      package:
+        name: docker
+        state: present
+
+    - name: Install Docker Compose (v2)
+      shell: |
+        curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose
+
+
+    - name: Add current user to docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+
+    - name: Ensure Docker is running
+      service:
+        name: docker
+        state: started
+        enabled: true
+
