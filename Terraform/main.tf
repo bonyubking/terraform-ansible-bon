@@ -65,3 +65,25 @@ module "rds_mysql" {
   db_name = var.db_name
   username = var.username
 }
+
+resource "local_file" "ansible_inventory" {
+  filename = "${path.module}/../Ansible/inventory/hosts.ini"
+  content = <<-EOT
+[bastion]
+bastion1 ansible_host=${module.ec2_instances.public_ips["bastion"]}
+
+[nat]
+nat1 ansible_host=${module.ec2_instances.public_ips["nat"]}
+
+[public]
+public1 ansible_host=${module.ec2_instances.public_ips["public"]}
+
+[private]
+private1 ansible_host=${module.ec2_instances.private_ip["private"]}
+
+[private:vars]
+ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -o StrictHostKeyChecking=no ec2-user@${module.ec2_instances.public_ips["bastion"]}"'
+EOT
+
+  depends_on = [module.ec2_instances]
+}

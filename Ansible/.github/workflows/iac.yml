@@ -1,0 +1,60 @@
+name: infrastructure with github actions
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name : Checkout
+        uses : actions/checkout@v5.0.0
+
+      - name : SetUp JDK
+        uses : actions/setup-java@v5.0.0
+        with:
+          java-version : '21'
+          distribution: 'temurin'
+
+      - name : Grant Permission
+        run : chmod +x ./gradlew
+
+      - name : build with gradle
+        run: ./gradlew bootJar -x test
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_ID }}
+          password: ${{ secrets.DOCKER_KEY }}
+
+      - name: Build and Push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ secrets.DOCKER_ID }}/bon:latest
+
+      - name : deploy test with github actions
+        uses : appleboy/ssh-action@v0.1.6
+        with :
+          host: ${{ secrets.PRIVATE_HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          proxy_host: ${{ secrets.HOST }}
+          proxy_username: ${{secrets.USER }}
+          proxy_key: ${{ secrets.KEY }}
+          script: |
+            cd /home/ec2-user/app
+            sudo docker-compose stop
+            sudo docker-compose rm -f
+            sudo docker rmi bonyubgu/bon:latest
+            sudo docker-compose up -d
+
+            
+            
+            
