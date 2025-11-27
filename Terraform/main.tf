@@ -87,3 +87,4 @@ EOT
 
   depends_on = [module.ec2_instances]
 }
+
