@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  myce-app:
+    image: bonyubgu/bon:latest
+    container_name: myce
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - .env

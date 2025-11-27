@@ -22,7 +22,4 @@ crash.log
 
 .DS_Store
 
-# Github Actions 자동화 전 수동 tfvars 주입용 
-
-*.tfvars
-*.auto.tfvars
+Ansible/templates/.env

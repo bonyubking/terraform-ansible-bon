@@ -1,0 +1,51 @@
+---
+- hosts: nat
+  become: yes
+  tasks:
+
+    - name: Enable IP forwarding
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: 1
+        state: present
+        reload: yes
+
+    - name: Install iptables if not exists (Amazon Linux uses nftables in some versions)
+      package:
+        name: iptables
+        state: present
+
+    - name: Configure NAT masquerading
+      command: iptables -t nat -A POSTROUTING -o enX0 -j MASQUERADE
+
+    - name: Save iptables rule (Amazon Linux 2023)
+      copy:
+        dest: /etc/iptables-rules
+        content: |
+          *nat
+          :PREROUTING ACCEPT [0:0]
+          :INPUT ACCEPT [0:0]
+          :OUTPUT ACCEPT [0:0]
+          :POSTROUTING ACCEPT [0:0]
+          -A POSTROUTING -o enX0 -j MASQUERADE
+          COMMIT
+
+    - name: Apply saved rules on boot
+      copy:
+        dest: /etc/systemd/system/iptables-restore.service
+        content: |
+          [Unit]
+          Description=Restore iptables rules
+
+          [Service]
+          Type=oneshot
+          ExecStart=/usr/sbin/iptables-restore /etc/iptables-rules
+          RemainAfterExit=yes
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Enable NAT iptables service
+      systemd:
+        name: iptables-restore.service
+        enabled: yes

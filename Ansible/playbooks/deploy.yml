@@ -1,0 +1,26 @@
+---
+- hosts: private
+  become: yes
+  tasks:
+    - name: Docker Login
+      community.docker.docker_login:
+        username: "bonyubgu"
+        password: "kus951024*"
+
+    - name: Deploy docker-compose.yml
+      template:
+        src: ../templates/docker-compose.yml
+        dest: /home/ec2-user/docker-compose.yml
+    
+    - name: Deploy .env file
+      template:
+        src: ../templates/.env
+        dest: /home/ec2-user/.env
+
+    - name: Pull latest images
+      become: yes
+      community.docker.docker_compose_v2:
+        project_src: /home/ec2-user
+        pull: always
+        build: always
+        state: present
