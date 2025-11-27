@@ -1,5 +1,5 @@
 locals {
-  keypair = aws_key_pair.myce_keypair.key_name
+  keypair = "terra_myce_keypair"
   project_name = "terra-bon"
 }
 
