@@ -23,3 +23,8 @@ crash.log
 .DS_Store
 
 Ansible/templates/.env
+
+*.tfstate
+*.tfstate.backup
+*.tfvars
+.terraform/
