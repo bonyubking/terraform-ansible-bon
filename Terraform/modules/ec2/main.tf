@@ -13,3 +13,22 @@ resource "aws_instance" "servers" {
     Name = "${var.prefix}-${each.key}"
   }
 }
+
+resource "local_file" "ansible_inventory" {
+  filename = "${path.module}/../Ansible/inventory/hosts.ini"
+
+  content = <<-EOT
+[bastion]
+${aws_instance.servers["bastion"].public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/mykey.pem
+
+[public]
+${aws_instance.servers["public"].public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/mykey.pem
+
+[private]
+${aws_instance.servers["private"].private_ip} ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/mykey.pem ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i ~/.ssh/mykey.pem ec2-user@${aws_instance.servers["bastion"].public_ip}"'
+
+[nat]
+${aws_instance.servers["nat"].public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/mykey.pem
+EOT
+}
+
