@@ -1,4 +1,4 @@
-provider "aws" {
-    profile = "myce"
-    region = "ap-northeast-2"
-}
+# provider "aws" {
+#     profile = "myce"
+#     region = "ap-northeast-2"
+# }
