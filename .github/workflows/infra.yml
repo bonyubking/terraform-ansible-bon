@@ -57,24 +57,37 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ansible-inventory     
+        name: ansible-inventory
         path: Ansible/inventory/hosts.ini
 
-  # ansible:
-  #   name: Ansible
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Setup Python
-  #     uses: actions/setup-python@v4
-  #     with:
-  #       python-version: '3.10'
-    
-  #   - name: Install Ansible
-  #     run: pip install ansible boto3
+  ansible:
+    name: Ansible
+    runs-on: ubuntu-latest
+    steps:
 
-  #   - name: Add SSH key
-  #     run: |
-  #       mkdir -p ~/.ssh
-  #       echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-  #       chmod 600 ~/.ssh/id_rsa
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+
+      - name: Install Ansible
+        shell: bash
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+      
+      - name: Set up SSH
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+      
+      - name: Download Inventory File
+        uses: actions/download-artifact@v4
+        with:
+          name: ansible-inventory      
+          path: Ansible/inventory 
+
+      - name: Run Ansible Playbook
+        run: |
+          ansible-playbook -i Ansible/inventory/hosts.ini \
+          Ansible/playbooks/dokcer-infra.yml --private-key private_key.pem -u \
+          ${{ secrets.ANSIBLE_USER }}
 
