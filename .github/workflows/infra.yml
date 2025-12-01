@@ -31,7 +31,7 @@ jobs:
         terraform_version: 1.1.7
     
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -upgrade
       working-directory: ./Terraform
     
     - name: Terraform Format
@@ -53,4 +53,28 @@ jobs:
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false
       working-directory: ./Terraform
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ansible-inventory     
+        path: Terraform/inventory/hosts.ini
+
+  # ansible:
+  #   name: Ansible
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Setup Python
+  #     uses: actions/setup-python@v4
+  #     with:
+  #       python-version: '3.10'
+    
+  #   - name: Install Ansible
+  #     run: pip install ansible boto3
+
+  #   - name: Add SSH key
+  #     run: |
+  #       mkdir -p ~/.ssh
+  #       echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+  #       chmod 600 ~/.ssh/id_rsa
 
