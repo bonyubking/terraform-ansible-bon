@@ -90,20 +90,18 @@ jobs:
       - name: Run Ansible Playbook
         working-directory: ./Ansible 
         run: |
-          cat "Ansible/inventory/hosts.ini"
-          ansible-playbook -i Ansible/inventory/hosts.ini \
-          Ansible/playbooks/nat-infra.yml
+          cat "inventory/hosts.ini"
+          ansible-playbook -i inventory/hosts.ini \
+          playbooks/nat-infra.yml
       
       - name: Run Ansible Playbook
         working-directory: ./Ansible 
         run: |
-          cat "Ansible/inventory/hosts.ini"
-          ansible-playbook -i Ansible/inventory/hosts.ini \
-          Ansible/playbooks/nginx-infra.yml  
+          ansible-playbook -i inventory/hosts.ini \
+          playbooks/nginx-infra.yml  
 
       - name: Run Ansible Playbook
         working-directory: ./Ansible 
         run: |
-          cat "Ansible/inventory/hosts.ini"
-          ansible-playbook -i Ansible/inventory/hosts.ini \
-          Ansible/playbooks/docker-infra.yml 
+          ansible-playbook -i inventory/hosts.ini \
+          playbooks/docker-infra.yml 
