@@ -90,19 +90,16 @@ jobs:
         run: |
           cat "Ansible/inventory/hosts.ini"
           ansible-playbook -i Ansible/inventory/hosts.ini \
-          Ansible/playbooks/nat-infra.yml --private-key private_key.pem -u \
-          ${{ secrets.ANSIBLE_USER }}
+          Ansible/playbooks/nat-infra.yml
       
       - name: Run Ansible Playbook
         run: |
           cat "Ansible/inventory/hosts.ini"
           ansible-playbook -i Ansible/inventory/hosts.ini \
-          Ansible/playbooks/nginx-infra.yml --private-key private_key.pem -u \
-          ${{ secrets.ANSIBLE_USER }}      
+          Ansible/playbooks/nginx-infra.yml  
 
       - name: Run Ansible Playbook
         run: |
           cat "Ansible/inventory/hosts.ini"
           ansible-playbook -i Ansible/inventory/hosts.ini \
-          Ansible/playbooks/docker-infra.yml --private-key private_key.pem -u \
-          ${{ secrets.ANSIBLE_USER }}
+          Ansible/playbooks/docker-infra.yml 
