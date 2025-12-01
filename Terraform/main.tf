@@ -67,7 +67,7 @@ module "rds_mysql" {
 }
 
 resource "aws_route" "private_to_nat" {
-  route_table_id         = module.vpc.private_rt_id
+  route_table_id         = module.vpc.route_table_id
   destination_cidr_block = "0.0.0.0/0"
   instance_id            = module.ec2_instances.nat_id
 }
