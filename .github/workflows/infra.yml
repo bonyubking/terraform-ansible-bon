@@ -29,18 +29,23 @@ jobs:
     
     - name: Terraform Init
       run: terraform init
+      working-directory: ./Terraform
     
     - name: Terraform Format
       run: terraform fmt -check
-    
+      working-directory: ./Terraform
+  
     - name: Terraform Validate
       id: validate
       run: terraform validate -no-color
+      working-directory: ./Terraform
     
     - name: Terraform Plan
       id: plan
       run: terraform plan -input=false -no-color
+      working-directory: ./Terraform
     
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false
+      working-directory: ./Terraform
 
