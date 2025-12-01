@@ -77,8 +77,8 @@ jobs:
       
       - name: Set up SSH
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
-          chmod 600 private_key.pem
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > terra_myce_keypair.pem
+          chmod 600 terra_myce_keypair.pem
       
       - name: Download Inventory File
         uses: actions/download-artifact@v4
@@ -90,6 +90,19 @@ jobs:
         run: |
           cat "Ansible/inventory/hosts.ini"
           ansible-playbook -i Ansible/inventory/hosts.ini \
+          Ansible/playbooks/nat-infra.yml --private-key private_key.pem -u \
+          ${{ secrets.ANSIBLE_USER }}
+      
+      - name: Run Ansible Playbook
+        run: |
+          cat "Ansible/inventory/hosts.ini"
+          ansible-playbook -i Ansible/inventory/hosts.ini \
+          Ansible/playbooks/nginx-infra.yml --private-key private_key.pem -u \
+          ${{ secrets.ANSIBLE_USER }}      
+
+      - name: Run Ansible Playbook
+        run: |
+          cat "Ansible/inventory/hosts.ini"
+          ansible-playbook -i Ansible/inventory/hosts.ini \
           Ansible/playbooks/docker-infra.yml --private-key private_key.pem -u \
           ${{ secrets.ANSIBLE_USER }}
-

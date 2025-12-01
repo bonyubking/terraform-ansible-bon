@@ -66,6 +66,13 @@ module "rds_mysql" {
   username = var.username
 }
 
+resource "aws_route" "private_to_nat" {
+  route_table_id         = module.vpc.private_rt_id
+  destination_cidr_block = "0.0.0.0/0"
+  instance_id            = module.ec2_instances.nat_id
+}
+
+
 resource "local_file" "ansible_inventory" {
   filename = "${path.module}/../Ansible/inventory/hosts.ini"
   content = <<-EOT
@@ -82,7 +89,7 @@ public1 ansible_host=${module.ec2_instances.public_ips["public"]}
 private1 ansible_host=${module.ec2_instances.private_ip["private"]}
 
 [private:vars]
-ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -o StrictHostKeyChecking=no ec2-user@${module.ec2_instances.public_ips["bastion"]}"'
+ansible_ssh_common_args='-o ProxyCommand="ssh -i ./terra_myce_keypair.pem -W %h:%p -o StrictHostKeyChecking=no ec2-user@${module.ec2_instances.public_ips["bastion"]}"'
 EOT
 
   depends_on = [module.ec2_instances]
