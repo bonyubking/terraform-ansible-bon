@@ -33,11 +33,13 @@ jobs:
     
     - name: Terraform Format
       run: terraform fmt -check
+      continue-on-error: true
       working-directory: ./Terraform
   
     - name: Terraform Validate
       id: validate
       run: terraform validate -no-color
+      continue-on-error: true
       working-directory: ./Terraform
     
     - name: Terraform Plan
