@@ -58,7 +58,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ansible-inventory     
-        path: Terraform/inventory/hosts.ini
+        path: Ansible/inventory/hosts.ini
 
   # ansible:
   #   name: Ansible
