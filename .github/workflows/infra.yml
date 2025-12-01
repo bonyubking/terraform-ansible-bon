@@ -9,7 +9,10 @@ jobs:
     name: Terraform
     runs-on: ubuntu-latest
     env:
-      working-directory: ./Terraform    
+      working-directory: ./Terraform
+      TF_VAR_db_pw: ${{ secrets.DB_PW }}
+      TF_VAR_db_name: ${{ secrets.DB_NAME }}
+      TF_VAR_username: ${{ secrets.DB_USERNAME }}    
     
     steps:
     - name: Checkout
