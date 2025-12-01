@@ -9,6 +9,8 @@ resource "aws_instance" "servers" {
   vpc_security_group_ids      = [each.value.sg]
   associate_public_ip_address = each.value.public
 
+  source_dest_check = (each.key == "nat" ? false : true)
+
   tags = {
     Name = "${var.prefix}-${each.key}"
   }

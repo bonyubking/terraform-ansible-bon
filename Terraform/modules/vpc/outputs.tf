@@ -14,6 +14,6 @@ output "vpc_id" {
   value = aws_vpc.vpc.id
 }
 
-output "route_table_id" {
+output "private_rt_id" {
   value = aws_route_table.bon-terra-private.id
 }

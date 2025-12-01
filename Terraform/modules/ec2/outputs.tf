@@ -10,6 +10,6 @@ output "public_ips" {
   }
 }
 
-output "nat_id" {
-  value = aws_instance.servers["nat"].id
+output "nat_eni_id" {
+  value = aws_instance.servers["nat"].primary_network_interface_id
 }
