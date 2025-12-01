@@ -76,6 +76,7 @@ jobs:
           sudo apt install -y ansible
       
       - name: Set up SSH
+        working-directory: ./Ansible      
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > terra_myce_keypair.pem
           chmod 600 terra_myce_keypair.pem
@@ -87,18 +88,21 @@ jobs:
           path: Ansible/inventory 
 
       - name: Run Ansible Playbook
+        working-directory: ./Ansible 
         run: |
           cat "Ansible/inventory/hosts.ini"
           ansible-playbook -i Ansible/inventory/hosts.ini \
           Ansible/playbooks/nat-infra.yml
       
       - name: Run Ansible Playbook
+        working-directory: ./Ansible 
         run: |
           cat "Ansible/inventory/hosts.ini"
           ansible-playbook -i Ansible/inventory/hosts.ini \
           Ansible/playbooks/nginx-infra.yml  
 
       - name: Run Ansible Playbook
+        working-directory: ./Ansible 
         run: |
           cat "Ansible/inventory/hosts.ini"
           ansible-playbook -i Ansible/inventory/hosts.ini \
