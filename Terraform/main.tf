@@ -28,7 +28,7 @@ module "ec2_instances" {
   source = "./modules/ec2"
   key_name = local.keypair
   prefix   = local.project_name
-  private_rt_id = module.vpc.route_table_id 
+  private_rt_id = module.vpc.private_rt_id 
 
   instances = {
     private = {
