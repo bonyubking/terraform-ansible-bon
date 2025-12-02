@@ -112,9 +112,3 @@ jobs:
         run: |
           ansible-playbook -i inventory/hosts.ini \
           playbooks/docker-infra.yml 
-
-      - name: Run Ansible Playbook3
-        working-directory: ./Ansible 
-        run: |
-          ansible-playbook -i inventory/hosts.ini \
-          playbooks/deploy.yml 

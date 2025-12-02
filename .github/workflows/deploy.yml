@@ -1,17 +1,41 @@
 name: "CI/CD For GitOps"
 
 on:
-  push:
-    branches: [dev]
+  repository_dispatch::
+    types: [ansible_event]
 
 jobs:
   deploy:
     name: Deploy Backend
     runs-on: ubuntu-latest
-    steps:     
-    - name: Download Inventory File
-      uses: actions/download-artifact@v4
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v5.0.0
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        name: ansible-inventory      
-        path: Ansible/inventory
-        run-id: infra.yml
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Set up SSH
+      working-directory: ./Ansible      
+      run: |
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > terra_myce_keypair.pem
+        chmod 600 terra_myce_keypair.pem
+                      
+    - name: Download Inventory File From S3 Bucket
+      uses: keithweaver/aws-s3-github-action@v1.0.0
+      with:
+        command: cp
+        source: s3://bon-artifact-bucket/hosts.ini
+        destination: ./Ansible/inventory/hosts.ini 
+    
+    - name: Run Ansible Playbook
+      working-directory: ./Ansible 
+      run: |
+        ansible-playbook -i inventory/hosts.ini \
+        playbooks/deploy.yml 
+

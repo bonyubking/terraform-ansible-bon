@@ -39,21 +39,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_ID }}/bon:latest
 
-      - name : deploy test with github actions
-        uses : appleboy/ssh-action@v0.1.6
-        with :
-          host: ${{ secrets.PRIVATE_HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.KEY }}
-          proxy_host: ${{ secrets.HOST }}
-          proxy_username: ${{secrets.USER }}
-          proxy_key: ${{ secrets.KEY }}
-          script: |
-            cd /home/ec2-user/app
-            sudo docker-compose stop
-            sudo docker-compose rm -f
-            sudo docker rmi bonyubgu/bon:latest
-            sudo docker-compose up -d
+
 
             
             
