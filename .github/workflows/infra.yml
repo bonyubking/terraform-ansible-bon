@@ -74,6 +74,13 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > terra_myce_keypair.pem
           chmod 600 terra_myce_keypair.pem
       
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          
       - name: Download Inventory File From S3 Bucket
         uses: keithweaver/aws-s3-github-action@v1.0.0
         with:
