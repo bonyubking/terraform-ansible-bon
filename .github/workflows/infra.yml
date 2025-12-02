@@ -59,7 +59,6 @@ jobs:
     needs: terraform
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout
         uses: actions/checkout@v5.0.0
 
@@ -97,19 +96,19 @@ jobs:
           ansible-playbook -i inventory/hosts.ini \
           playbooks/nat-infra.yml
       
-      - name: Run Ansible Playbook
+      - name: Run Ansible Playbook1
         working-directory: ./Ansible 
         run: |
           ansible-playbook -i inventory/hosts.ini \
           playbooks/nginx-infra.yml  
 
-      - name: Run Ansible Playbook
+      - name: Run Ansible Playbook2
         working-directory: ./Ansible 
         run: |
           ansible-playbook -i inventory/hosts.ini \
           playbooks/docker-infra.yml 
 
-      - name: Run Ansible Playbook
+      - name: Run Ansible Playbook3
         working-directory: ./Ansible 
         run: |
           ansible-playbook -i inventory/hosts.ini \
