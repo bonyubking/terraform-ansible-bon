@@ -5,12 +5,13 @@ on:
     branches: [dev]
 
 jobs:
-  name: Deploy Backend
-  runs-on: ubuntu-latest
-  steps:     
-  - name: Download Inventory File
-    uses: actions/download-artifact@v4
-    with:
-      name: ansible-inventory      
-      path: Ansible/inventory
-      run-id: infra.yml
+  deploy:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    steps:     
+    - name: Download Inventory File
+      uses: actions/download-artifact@v4
+      with:
+        name: ansible-inventory      
+        path: Ansible/inventory
+        run-id: infra.yml
