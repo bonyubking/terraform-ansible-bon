@@ -72,26 +72,31 @@ resource "aws_route" "private_to_nat" {
   network_interface_id   = module.ec2_instances.nat_eni_id
 }
 
+data "aws_s3_bucket" "artifact_bucket" {
+  bucket = "bon-artifact-bucket"
+}
 
-resource "local_file" "ansible_inventory" {
-  filename = "${path.module}/../Ansible/inventory/hosts.ini"
+resource "aws_s3_object" "ansible_inventory_upload" {
+  bucket = data.aws_s3_bucket.artifact_bucket.id
+  key    = "hosts.ini"        
   content = <<-EOT
-[bastion]
-bastion1 ansible_host=${module.ec2_instances.public_ips["bastion"]}
+    [bastion]
+    bastion1 ansible_host=${module.ec2_instances.public_ips["bastion"]}
 
-[nat]
-nat1 ansible_host=${module.ec2_instances.public_ips["nat"]}
+    [nat]
+    nat1 ansible_host=${module.ec2_instances.public_ips["nat"]}
 
-[public]
-public1 ansible_host=${module.ec2_instances.public_ips["public"]}
+    [public]
+    public1 ansible_host=${module.ec2_instances.public_ips["public"]}
 
-[private]
-private1 ansible_host=${module.ec2_instances.private_ip["private"]}
+    [private]
+    private1 ansible_host=${module.ec2_instances.private_ip["private"]}
 
-[private:vars]
-ansible_ssh_common_args='-o ProxyCommand="ssh -i ./terra_myce_keypair.pem -W %h:%p -o StrictHostKeyChecking=no ec2-user@${module.ec2_instances.public_ips["bastion"]}"'
-EOT
-
-  depends_on = [module.ec2_instances]
+    [private:vars]
+    ansible_ssh_common_args='-o ProxyCommand="ssh -i ./terra_myce_keypair.pem -W %h:%p -o StrictHostKeyChecking=no ec2-user@${module.ec2_instances.public_ips["bastion"]}"'
+    EOT
+  depends_on = [
+    module.ec2_instances
+  ]
 }
 
