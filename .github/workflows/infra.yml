@@ -75,13 +75,12 @@ jobs:
           chmod 600 terra_myce_keypair.pem
       
       - name: Download Inventory File From S3 Bucket
-        working-directory: ./Ansible
         uses: keithweaver/aws-s3-github-action@v1.0.0
         with:
           command: download
           bucket: bon-artifact-bucket
           source: hosts.ini 
-          destination: ./inventory/hosts.ini 
+          destination: ./Ansible/inventory/hosts.ini 
 
       - name: Set up Backend .Env
         working-directory: ./Ansible/templates      
