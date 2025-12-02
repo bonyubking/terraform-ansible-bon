@@ -93,7 +93,7 @@ jobs:
           echo "${{ secrets.BACKEND_ENV }}" > .env
           cat ".env"       
 
-      - name: Run Ansible Playbook
+      - name: Run Nat-Infra Playbook
         working-directory: ./Ansible 
         run: |
           cat "inventory/hosts.ini"
@@ -111,3 +111,9 @@ jobs:
         run: |
           ansible-playbook -i inventory/hosts.ini \
           playbooks/docker-infra.yml 
+
+      - name: Run Ansible Playbook
+        working-directory: ./Ansible 
+        run: |
+          ansible-playbook -i inventory/hosts.ini \
+          playbooks/deploy.yml 
