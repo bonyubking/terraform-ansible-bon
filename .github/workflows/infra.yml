@@ -85,7 +85,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ansible-inventory      
-          path: Ansible/inventory 
+          path: Ansible/inventory
+
+      - name: Set up Backend .Env
+        working-directory: ./Ansible/templates      
+        run: |
+          echo "${{ secrets.BACKEND_ENV }}" > .env
+          cat ".env"       
 
       - name: Run Ansible Playbook
         working-directory: ./Ansible 
