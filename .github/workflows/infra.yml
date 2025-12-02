@@ -54,12 +54,6 @@ jobs:
       run: terraform apply -auto-approve -input=false
       working-directory: ./Terraform
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: ansible-inventory
-        path: Ansible/inventory/hosts.ini
-
   ansible:
     name: ansible
     needs: terraform
@@ -81,11 +75,14 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > terra_myce_keypair.pem
           chmod 600 terra_myce_keypair.pem
       
-      - name: Download Inventory File
-        uses: actions/download-artifact@v4
+      - name: Download Inventory File From S3 Bucket
+        working-directory: ./Ansible
+        uses: keithweaver/aws-s3-github-action@v1.0.0
         with:
-          name: ansible-inventory      
-          path: Ansible/inventory
+          command: download
+          bucket: bon-artifact-bucket
+          source: hosts.ini 
+          destination: ./inventory/hosts.ini 
 
       - name: Set up Backend .Env
         working-directory: ./Ansible/templates      
