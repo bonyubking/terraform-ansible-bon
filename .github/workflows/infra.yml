@@ -84,9 +84,8 @@ jobs:
       - name: Download Inventory File From S3 Bucket
         uses: keithweaver/aws-s3-github-action@v1.0.0
         with:
-          command: download
-          bucket: bon-artifact-bucket
-          source: hosts.ini 
+          command: cp
+          source: s3://bon-artifact-bucket/hosts.ini
           destination: ./Ansible/inventory/hosts.ini 
 
       - name: Set up Backend .Env
