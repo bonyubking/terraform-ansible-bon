@@ -36,6 +36,7 @@ Myce 에서는 클라우드 리소스로 AWS를 사용한다.
 인프라 내의 하드웨어 생성 및 환경 설정을 담당한다. (EC2, RDS, S3, VPC, SG 등)
 
 ** Myce 프로비져닝 **
+
 네트워크 
   - VPC
   - Public / Private Subnet
