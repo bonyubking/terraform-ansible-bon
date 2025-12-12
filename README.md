@@ -12,16 +12,16 @@ Myce 에서는 선언형 Tool로 Terraform, 절차형 Tool로 Ansible을 사용�
 
 ## InfraStructure VS DevOps VS CI/CD
 
-# Infrastructure ? 
+### Infrastructure  
 
 서비스가 돌아가기 위한 시설 ( EC2, RDS, NAT, IGW 등 )
 
-# DevOps ? 
+### DevOps  
 
 Develop + Opertions 개발과 운영을 하나의 흐름으로 만드는 방법론
 Jira / Slack / IaC 등이 DevOps 활동에 속한다.
 
-# CI/CD ? 
+### CI/CD  
 
 Continuous Integration(통합), Continuous Deployment(배포)
 파이프 라인을 구축해서 프로젝트 전반에 지속적/연결성 있는 통합과 배포를 가능하게 하는 과정
@@ -42,7 +42,7 @@ Myce 에서는 클라우드 리소스로 AWS를 사용한다.
 
 ## Ansible
 
-Ansible ? 엔터프라이즈 하ㅗㄴ경에서 클라우드 리소스들을 일괄적으로 관리하기 위한 코드형 관리 도구
+Ansible ? 엔터프라이즈 환경에서 클라우드 리소스들을 일괄적으로 관리하기 위한 코드형 관리 도구
 Python module / SSH 를 사용하여 원격 클라우드 리소스에 명령을 수행시키는 것이 주 목적이다.
 
 절차형 언어 : 순서대로 실행할 명령을 정의하는 코드를 작성하는 방식
