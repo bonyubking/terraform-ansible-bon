@@ -2,14 +2,6 @@
 
 <img width="1775" height="892" alt="diagram" src="https://github.com/user-attachments/assets/73d8aff9-ea47-4cbe-ad44-9f1b334e7d90" />
 
-## IAC ( Intrastructure as Code )
-
-수동으로 인프라를 설정하는 기존 방식에서 벗어나 코드를 사용해서 프로젝트의 전체 환경을 프로비저닝 및 관리 하는 방식
-기존 방식에 비해 자동화, 일관성, 효율성 측면에서 강점을 가진다.
-
-선언형(Declarative), 절차형(Imperative) 두가지 작동 방식으로 나뉜다.
-Myce 에서는 선언형 Tool로 Terraform, 절차형 Tool로 Ansible을 사용하고 있다.
-
 ## InfraStructure VS DevOps VS CI/CD
 
 ### Infrastructure  
@@ -28,6 +20,10 @@ Continuous Integration(통합), Continuous Deployment(배포)
 
 GitHub Actions 를 통해 Git push -> docker build -> docker pull -> docker run 과정을 일원화하는 것이 Myce 내의 CI/CD
 
+## IAC ( Intrastructure as Code )
+
+수동으로 인프라를 설정하는 기존 방식에서 벗어나 코드를 사용해서 프로젝트의 전체 환경을 프로비저닝 및 관리 하는 방식
+기존 방식에 비해 자동화, 일관성, 효율성 측면에서 강점을 가진다.
 
 ## HashiCorp Terraform
 
