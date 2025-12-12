@@ -48,8 +48,6 @@ Python module / SSH 를 사용하여 원격 클라우드 리소스에 명령을 
 절차형 언어 : 순서대로 실행할 명령을 정의하는 코드를 작성하는 방식
 Myce 인프라 내에서 하드웨어 내 시스템 설정, 소프트웨어 설정 및 설치를 담당한다. ( NginX, Docker, NAT IP Forwarding 등) 
 
-## Github Actions
-
 
 
 
